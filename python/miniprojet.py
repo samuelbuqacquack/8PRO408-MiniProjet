@@ -8,7 +8,7 @@ class PipelineDeNettoyage:
     # Diagnostic sur les données. Le fichier en entrée est où sauvegarder le rapport.
     def diagnostic(self, donnees, titre, fichier):
         self.logs.append("Diagnostic: analyse de complétude et doublons.")
-        rapport = ProfileReport(donnees, title=titre, explorative=True)
+        rapport = ProfileReport(donnees, title=titre, explorative=True, correlations={"auto": {"calculate": False}})
         rapport.to_file(fichier)
         self.logs.append(f"  Profil des données sauvegardé dans le fichier \"{fichier}\".")
         self.logs.append("")        
