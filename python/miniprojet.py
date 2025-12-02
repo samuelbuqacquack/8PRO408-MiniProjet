@@ -2,8 +2,7 @@ import pandas as pd
 from ydata_profiling import ProfileReport
 
 # Diagnostic sur les données. Le fichier en entrée est où sauvegarder le rapport.
-def diagnostic(self, donnees, titre, fichier):
-    self.logs.append("Diagnostic: analyse de complétude et doublons.")
+def diagnostic(donnees, titre, fichier):
     rapport = ProfileReport(donnees, title=titre, explorative=True, correlations={"auto": {"calculate": False}})
     rapport.to_file(fichier)
 
