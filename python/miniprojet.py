@@ -77,10 +77,8 @@ types_tendances.plot(backend="plotly")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees.groupby("listed_in")["listed_in"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On note la présence de recoupages. La stratégie ici sera de dupliquer 
-#donnees_genre["listed_in"] = donnees_genre["listed_in"].apply(lambda x: pd.DataFrame(x.str))
-#donnees_genre = donnees.groupby("listed_in")["listed_in"].count()
-#print(donnees.groupby("listed_in").apply(lambda x: x["listed_in"].str.split[", "]))
+# On note la présence de recoupages. La stratégie ici sera de dupliquer les entrées en ne gardant qu'un seul genre par entrée.
+# TODO Cette statégie sera utile plus loin donc on en fait une fonction.
 genres_split = donnees["listed_in"].str.split(pat=", ", expand=True)
 print(genres_split)
 # --------------------------------------------------------------------------------------------------------------------------------------
