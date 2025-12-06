@@ -94,7 +94,7 @@ types_tendances = types_tendances.unstack().fillna(0).astype("int64")
 print(types_tendances)
 types_tendances.plot(backend="plotly")
 # --------------------------------------------------------------------------------------------------------------------------------------
-# Genres principaux
+# 2b) Genres principaux
 # Pour cette colonne, aucune valeur manquante n'est reportée, donc aucun pré-traitement n'est nécessaire.
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees.groupby("listed_in")["listed_in"].count())
