@@ -14,7 +14,6 @@ def compte_avec_recoupages(donnees_entrantes):
     donnees_separees = donnees_entrantes.str.split(pat=", ", expand=True)
     print(donnees_separees)
 
-    # On a obtenu un maximum de x genre par entrée.
     nb_colonnes_add = donnees_separees.shape[1] -1 # Nombre de colonnes additionnelles
     # Il nous suffit de comptabiliser par chacune des colonnes et des les aditionner
     # On prend soin de remplacer les chaînes vides par NaN (ex: ", genre2"  commence par une virgule et crée ainsi une chaîne vide au début)
@@ -99,7 +98,7 @@ types_tendances.plot(backend="plotly")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees.groupby("listed_in")["listed_in"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On note la présence de recoupages (plus d'un genre par entrée).
+# On dénote la présence de recoupages.
 genres = compte_avec_recoupages(donnees["listed_in"])
 genres.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres
 # --------------------------------------------------------------------------------------------------------------------------------------
@@ -110,7 +109,7 @@ donnees_nettoyees["country"] = donnees_nettoyees["country"].fillna("Unknown")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees_nettoyees.groupby("listed_in")["listed_in"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On note la présence de recoupages (plus d'un genre par entrée).
+# On dénote la présence de recoupages.
 pays = compte_avec_recoupages(donnees_nettoyees["country"])
 pays.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres  TODO afficher en formet de tarte plutôt
 # --------------------------------------------------------------------------------------------------------------------------------------
@@ -121,6 +120,6 @@ donnees_nettoyees["director"] = donnees_nettoyees["director"].fillna("Unknown")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees_nettoyees.groupby("director")["director"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On note la présence de recoupages (plus d'un genre par entrée).
+# On dénote la présence de recoupages.
 realisateurs = compte_avec_recoupages(donnees_nettoyees["director"])
 # TODO filtrer les noms fréquents
