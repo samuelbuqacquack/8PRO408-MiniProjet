@@ -1,11 +1,33 @@
 import pandas as pd
 from ydata_profiling import ProfileReport
+import numpy as np
 
 # Diagnostic sur les données. Le fichier en entrée est où sauvegarder le rapport.
 def diagnostic(donnees, titre, fichier):
     rapport = ProfileReport(donnees, title=titre, explorative=True, correlations={"auto": {"calculate": False}})
     rapport.to_file(fichier)
 
+# Duplique les données d'un groupby en ne gardant qu'une catégorie par entrée.
+# Affiche aussi la différence avant / après
+def compte_avec_recoupages(donnees_entrantes):
+    # Sépare les données en plusieurs colonnes
+    donnees_separees = donnees_entrantes.str.split(pat=", ", expand=True)
+    print(donnees_separees)
+
+    # On a obtenu un maximum de x genre par entrée.
+    nb_colonnes_add = donnees_separees.shape[1] -1 # Nombre de colonnes additionnelles
+    # Il nous suffit de comptabiliser par chacune des colonnes et des les aditionner
+    # On prend soin de remplacer les chaînes vides par NaN (ex: ", genre2"  commence par une virgule et crée ainsi une chaîne vide au début)
+    # Lors de l'addition des colonnes, les genres non comptabilisés dans une colonne donnée seront replacées par 0.
+    retour = donnees_separees.replace("", np.nan).groupby(0)[0].count()
+    for index in range(1,nb_colonnes_add): # Commence à 1 car on n'a pas besoin d'ajouter 0 à 0...
+        retour = retour.add(donnees_separees.replace("", np.nan).groupby(index)[index].count(), fill_value=0)
+    retour = retour.astype("int64")
+   
+    print(retour)    
+    return retour
+
+# ------------------------------------------------------------------------------
 # Chargement des données
 fichier = "netflix_titles.csv"
 donnees = pd.read_csv(fichier, encoding='utf-8', encoding_errors='ignore')  # Chargement du fichier csv
