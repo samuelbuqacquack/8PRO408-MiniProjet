@@ -113,7 +113,7 @@ print(donnees_nettoyees.groupby("listed_in")["listed_in"].count())
 pays = compte_avec_recoupages(donnees_nettoyees["country"])
 pays.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres  TODO afficher en formet de tarte plutôt
 # --------------------------------------------------------------------------------------------------------------------------------------
-# 2d1) Réalisateurs
+# 2d2) Réalisateurs
 # Les entrées manquantes seront premièrement marquées "Unkown".
 donnees_nettoyees = donnees
 donnees_nettoyees["director"] = donnees_nettoyees["director"].fillna("Unknown")
