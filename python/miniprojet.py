@@ -111,5 +111,5 @@ donnees_nettoyees["country"] = donnees_nettoyees["country"].fillna("Unknown")
 print(donnees_nettoyees.groupby("listed_in")["listed_in"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
 # On note la présence de recoupages (plus d'un genre par entrée).
-pays = compte_avec_recoupages(donnees_pays["country"])
+pays = compte_avec_recoupages(donnees_nettoyees["country"])
 pays.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres  TODO afficher en formet de tarte plutôt
