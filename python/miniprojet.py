@@ -99,17 +99,12 @@ types_tendances.plot(backend="plotly")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
 print(donnees.groupby("listed_in")["listed_in"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On note la présence de recoupages. La stratégie ici sera de dupliquer les entrées en ne gardant qu'un seul genre par entrée.
-# TODO Cette statégie sera utile plus loin donc on en fait une fonction.
-genres_split = donnees["listed_in"].str.split(pat=", ", expand=True)
-print(genres_split)
+# On note la présence de recoupages (plus d'un genre par entrée).
+genres = compte_avec_recoupages(donnees["listed_in"])
+genres.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres
 # --------------------------------------------------------------------------------------------------------------------------------------
-# On a obtenu un maximum de trois genres par entrée.
-# Il nous suffit de comptabiliser par chacune des trois colonnes et des les aditionner
-# (On prend soin de remplacer les NaN (genres non comptabilisés dans une colonne) par 0.)
-genres = [genres_split.groupby(0)[0].count(), genres_split.groupby(1)[1].count(), genres_split.groupby(2)[2].count()]
-genres[0] = genres[0].add(genres[1], fill_value=0)
-genres[0] = genres[0].add(genres[2], fill_value=0)
-genres = genres[0].astype("int64")
-print(genres)
-genres.sort_values().plot.bar(backend="plotly") # Affiche un graphique par fréquence
+# 2c) Répartition géographique
+# Les 831 entrées manquantes seront premièrement marquées "Unkown".
+test = donnees
+test["country"] = test["country"].fillna("Unknown")
+pays = compte_avec_recoupages(test["country"])
