@@ -113,3 +113,14 @@ print(donnees_nettoyees.groupby("listed_in")["listed_in"].count())
 # On note la présence de recoupages (plus d'un genre par entrée).
 pays = compte_avec_recoupages(donnees_nettoyees["country"])
 pays.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres  TODO afficher en formet de tarte plutôt
+# --------------------------------------------------------------------------------------------------------------------------------------
+# 2d1) Réalisateurs
+# Les entrées manquantes seront premièrement marquées "Unkown".
+donnees_nettoyees = donnees
+donnees_nettoyees["director"] = donnees_nettoyees["director"].fillna("Unknown")
+# Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
+print(donnees_nettoyees.groupby("director")["director"].count())
+# --------------------------------------------------------------------------------------------------------------------------------------
+# On note la présence de recoupages (plus d'un genre par entrée).
+realisateurs = compte_avec_recoupages(donnees_nettoyees["director"])
+# TODO filtrer les noms fréquents
