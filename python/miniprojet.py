@@ -122,4 +122,6 @@ print(donnees_nettoyees.groupby("director")["director"].count())
 # --------------------------------------------------------------------------------------------------------------------------------------
 # On dénote la présence de recoupages.
 realisateurs = compte_avec_recoupages(donnees_nettoyees["director"])
-# TODO filtrer les noms fréquents
+realisateurs_frequents = realisateurs.drop(index="Unknown").reset_index(name='count').sort_values(['count'], ascending=False).head(5)
+print("-------- Five most frequent known directors --------")
+print(realisateurs_frequents)
