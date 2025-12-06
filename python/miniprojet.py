@@ -113,6 +113,20 @@ print(donnees_nettoyees.groupby("listed_in")["listed_in"].count())
 pays = compte_avec_recoupages(donnees_nettoyees["country"])
 pays.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres  TODO afficher en formet de tarte plutôt
 # --------------------------------------------------------------------------------------------------------------------------------------
+# 2d1) Casting
+# Les entrées manquantes seront premièrement marquées "Unkown".
+donnees_nettoyees = donnees
+donnees_nettoyees["cast"] = donnees_nettoyees["cast"].fillna("Unknown")
+# Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
+print(donnees_nettoyees.groupby("cast")["cast"].count())
+# --------------------------------------------------------------------------------------------------------------------------------------
+# On dénote la présence de recoupages.
+acteurs = compte_avec_recoupages(donnees_nettoyees["cast"])
+acteurs_frequents = acteurs.drop(index="Unknown").reset_index(name='count').sort_values(['count'], ascending=False).head(5)
+print("-------- Five most frequent known actors --------")
+print(acteurs_frequents)
+# (P.S.: On remarque que "Jr". a mal été découpé, mais sa relative très faible fréquence ne donne pas lieu à coder spécialement pour rectifier.)
+# --------------------------------------------------------------------------------------------------------------------------------------
 # 2d2) Réalisateurs
 # Les entrées manquantes seront premièrement marquées "Unkown".
 donnees_nettoyees = donnees
