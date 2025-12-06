@@ -104,7 +104,7 @@ genres = compte_avec_recoupages(donnees["listed_in"])
 genres.sort_values().plot.bar(backend="plotly") # Affiche un graphique en barres
 # --------------------------------------------------------------------------------------------------------------------------------------
 # 2c) Répartition géographique
-# Les 831 entrées manquantes seront premièrement marquées "Unkown".
+# Les entrées manquantes seront premièrement marquées "Unkown".
 donnees_pays = donnees
 donnees_pays["country"] = donnees_pays["country"].fillna("Unknown")
 # Aperçu afin de s'assurer qu'ils ne sont pas dupliqués (majuscules-minuscules)
